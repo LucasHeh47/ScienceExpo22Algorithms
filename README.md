@@ -1,6 +1,6 @@
 # ScienceExpo22Algorithms
 ## Project for a Science Fair
-### Partnered with [Mathew Team](https://github.com/MTeem)
+### Partnered with [Mathew Teem](https://github.com/MTeem)
 
 This program was used to grab data to insert into tables onto google sheets.
 
