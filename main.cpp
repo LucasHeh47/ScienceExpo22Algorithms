@@ -39,6 +39,8 @@ void nearlySortedList();
 
 void massDataRetrieve();
 
+bool isSorted(int[]);
+
 //  --- Main Function ---
 int main() {
   srand(time(NULL)); // This is important for random
@@ -69,8 +71,8 @@ void UI() {
     cout << "2. Selection Sort\n";
     cout << "3. Insertion Sort\n";
     cout << "4. Shell Sort\n";
-    cout << "5. Heap Sort (WIP)\n";
-    cout << "6. Merge Sort (WIP)\n";
+    cout << "5. Heap Sort\n";
+    cout << "6. Merge Sort\n";
     cout << "7. All\n\n";
     cout << "> ";
     cin >> algResponse;
@@ -442,14 +444,15 @@ void bubbleSort(list<int> unsortedList, string listType) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Sorting finished in " << duration.count() / 1000
-       << " milliseconds, Saving data now...\n";
+       << " milliseconds\n";
+
+  // Saves sorted file for confirming it is sorted
   ofstream file;
   file.open("results/bubble_sort/" + listType);
   for (i = 0; i < unsortedList.size() - 1; i++) {
     file << arr[i] << " ";
   }
   file.close();
-  cout << "Data saved in results/bubble_sort/" << listType << "\n";
 }
 
 
@@ -491,7 +494,7 @@ void selectionSort(list<int> unsortedList, string listType) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Sorting finished in " << duration.count() / 1000
-       << " milliseconds, Saving data now...\n";
+       << " milliseconds\n";
   
   ofstream file;
   file.open("results/selection_sort/" + listType);
@@ -499,7 +502,6 @@ void selectionSort(list<int> unsortedList, string listType) {
     file << arr[i] << " ";
   }
   file.close();
-  cout << "Data saved in results/selection_sort/" << listType << "\n";
 }
 
 
@@ -542,7 +544,7 @@ void insertionSort(list<int> unsortedList, string listType)
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Sorting finished in " << duration.count() / 1000
-       << " milliseconds, Saving data now...\n";
+       << " milliseconds\n";
   
   ofstream file;
   file.open("results/insertion_sort/" + listType);
@@ -550,7 +552,6 @@ void insertionSort(list<int> unsortedList, string listType)
     file << arr[i] << " ";
   }
   file.close();
-  cout << "Data saved in results/selection_sort/" << listType << "\n";
 }
 
 
@@ -597,7 +598,7 @@ void shellSort(list<int> unsortedList, string listType) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Sorting finished in " << duration.count() / 1000
-       << " milliseconds, Saving data now...\n";
+       << " milliseconds\n";
   
   ofstream file;
   file.open("results/shell_sort/" + listType);
@@ -605,7 +606,6 @@ void shellSort(list<int> unsortedList, string listType) {
     file << arr[i] << " ";
   }
   file.close();
-  cout << "Data saved in results/shell_sort/" << listType << "\n";
 }
 
 // MERGE SORT UTILITY FUNCTIONS
@@ -702,7 +702,7 @@ void mergeSort(list<int> unsortedList, string listType) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Sorting finished in " << duration.count() / 1000
-       << " milliseconds, Saving data now...\n";
+       << " milliseconds\n";
   
   ofstream file;
   file.open("results/merge_sort/" + listType);
@@ -710,7 +710,6 @@ void mergeSort(list<int> unsortedList, string listType) {
     file << arr[i] << " ";
   }
   file.close();
-  cout << "Data saved in results/merge_sort/" << listType << "\n";
   
 }
 
@@ -767,7 +766,7 @@ void heapSort(list<int> unsortedList, string listType) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Sorting finished in " << duration.count() / 1000
-       << " milliseconds, Saving data now...\n";
+       << " milliseconds\n";
   
   ofstream file;
   file.open("results/heap_sort/" + listType);
@@ -775,5 +774,31 @@ void heapSort(list<int> unsortedList, string listType) {
     file << arr[i] << " ";
   }
   file.close();
-  cout << "Data saved in results/heap_sort/" << listType << "\n";
+}
+
+bool isSorted(list<int> list) {
+  int n = list.size();
+
+  // Convert list to array
+  int arr[n];
+  int k = 0;
+  for (int num : list) {
+    arr[k] = num;
+    k++;
+  }
+
+  for (int i = 0; i < list.size() - 1; i++)
+    for (int j = 0; j < list.size() - i - 1; j++)
+      if (arr[j] > arr[j + 1])
+        return false;
+  return true;
+}
+bool isSorted(int list[]) {
+  int n = sizeof(list) / sizeof(list[0]);
+
+  for (int i = 0; i < n - 1; i++)
+    for (int j = 0; j < n - i - 1; j++)
+      if (list[j] > list[j + 1])
+        return false;
+  return true;
 }
